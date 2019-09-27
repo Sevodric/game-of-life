@@ -39,6 +39,9 @@ void board_init(cell board[][NCELL]);
 // board_draw : dessine le plateau
 void board_draw(cell board[][NCELL]);
 
+// board_update : 
+void board_update(cell board[][NCELL]);
+
 // --- FONCTION PRINCIPALE
 // -----------------------------------------------------------------------------
 
@@ -47,10 +50,14 @@ int main(void) {
   srand((unsigned int) time(NULL));
   cell board[NCELL][NCELL];
   board_init(board);
+  board[10][9].state = 1;
+  board[10][10].state = 1;
+  board[10][11].state = 1;
   sg_open(WIDTH, HEIGHT, BGCOLOR, FGCOLOR, TITLE);
-  do {
+  while (sg_get_key() != 'q') {
     board_draw(board);
-  } while (sg_get_key() != 'q');
+    board_update(board);
+  }
   sg_close();
   return EXIT_SUCCESS;
 }
@@ -85,3 +92,42 @@ void board_draw(cell board[][NCELL]) {
     }
   }
 }
+
+// --- board_update
+void board_update(cell board[][NCELL]) {
+  for (int i = 0; i < NCELL; i++) {
+    for (int j = 0; j < NCELL; j++) {
+      int count = 0;
+      if (board[j - 1][i - 1].state == 1) {
+        count++;
+      }
+      if (board[j - 1][i].state == 1) {
+        count++;
+      }
+      if (board[j - 1][i + 1].state == 1) {
+        count++;
+      }
+      if (board[j][i + 1].state == 1) {
+        count++;
+      }
+      if (board[j + 1][i + 1].state == 1) {
+        count++;
+      }
+      if (board[j + 1][i].state == 1) {
+        count++;
+      }
+      if (board[j + 1][i - 1].state == 1) {
+        count++;
+      }
+      if (board[j][i - 1].state == 1) {
+        count++;
+      }
+      if (board[j][i].state == 0 && count == 3) {
+        board[j][i].state = 1;
+      } else if (board[j][i].state == 1 && !(count == 3 || count == 2)) {
+        board[j][i].state = 0;
+      }
+    }
+  }
+}
+
