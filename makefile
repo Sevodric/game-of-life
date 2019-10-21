@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -std=c11 -Wall -Wconversion -Werror -Wextra -Wpedantic -Wwrite-strings -O2
 LDFLAGS = -lX11
-objects = gol.o sg.o
-executable = gol
+objects = main.o gol.o sg.o
+executable = main
 
 all: $(executable)
 
@@ -12,5 +12,6 @@ clean:
 $(executable): $(objects)
 	$(CC) $(objects) $(LDFLAGS) -o $(executable)
 
-gol.o: gol.c sg.h
+main.o: main.c
+gol.o: gol.c gol.h
 sg.o: sg.c sg.h
