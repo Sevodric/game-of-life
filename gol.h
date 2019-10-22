@@ -11,8 +11,8 @@
 #ifndef GOL__H
 #define GOL__H
 
-#define BOARD_SIZE 9
-#define CELL_SIZE 100
+#define BOARD_SIZE 30
+#define CELL_SIZE 30
 
 typedef struct {
   int curr_gen[BOARD_SIZE][BOARD_SIZE];

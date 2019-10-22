@@ -31,7 +31,7 @@ int main(void) {
   sg_open(WIDTH, HEIGHT, BGCOLOR, FGCOLOR, TITLE);
   board b;
   board_init(&b);
-  ic_blinker(&b, 5, 5);
+  ic_glider(&b, 3, 3);
   while (sg_get_key() != 'q') {
     board_draw(&b);
     board_update(&b);

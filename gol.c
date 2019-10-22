@@ -20,23 +20,29 @@ void board_init(board *ptr) {
 //  --- board_update
 void board_update(board *ptr) {
   FOR_EACH_CELL(
-    if (ptr->curr_gen[x][y] == 1 && alive_neighbors(ptr, x, y) < 2) {
-    ptr->next_gen[x][y] = 0;
-  } else if (ptr->curr_gen[x][y] == 1 && alive_neighbors(ptr, x, y) > 3) {
-    ptr->next_gen[x][y] = 0;
-  } else if (ptr->curr_gen[x][y] == 0 && alive_neighbors(ptr, x, y) == 3) {
-    ptr->next_gen[x][y] = 1;
-  } else {
-    ptr->next_gen[x][y] = ptr->curr_gen[x][y];
-  }
-    )
+    if (ptr->curr_gen[x][y] == 1) {
+      if (alive_neighbors(ptr, x, y) == 2 || alive_neighbors(ptr, x, y) == 3) {
+        ptr->next_gen[x][y] = 1;
+      } else {
+        ptr->next_gen[x][y] = 0;
+      }
+    } else if (ptr->curr_gen[x][y] == 0) {
+      if (alive_neighbors(ptr, x, y) == 3) {
+        ptr->next_gen[x][y] = 1;
+      } else {
+        ptr->next_gen[x][y] = 0;
+      }
+    } else {
+      ptr->next_gen[x][y] = ptr->curr_gen[x][y];
+    }
+  )
 }
 
 //  --- board_upgrade
 void board_upgrade(board *ptr) {
   FOR_EACH_CELL(
     ptr->curr_gen[x][y] = ptr->next_gen[x][y];
-    )
+  )
   ptr->gen += 1;
 }
 
@@ -45,11 +51,11 @@ void board_draw(board *ptr) {
   sg_clear();
   FOR_EACH_CELL(
     if (ptr->curr_gen[x][y] == 1) {
-    sg_fill_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-  } else {
-    sg_draw_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-  }
-    )
+      sg_fill_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+    } else {
+      sg_draw_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+    }
+  )
 }
 
 //  --- alive_neighbors
@@ -60,7 +66,7 @@ int alive_neighbors(board *ptr, int x, int y) {
       n += ptr->curr_gen[i][j];
     }
   }
-  n -= 1;
+  n -= ptr->curr_gen[x][y];
   return n;
 }
 
