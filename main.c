@@ -11,26 +11,19 @@
 
 //  ----------------------------------------------------------------------------
 
-//  Le jeu de la vie, selon les règles de John Conway :
-//    "À chaque étape, l’évolution d’une cellule est entièrement déterminée par
-//    l’état de ses huit voisines de la façon suivante :
-//
-//    - Une cellule morte possédant exactement trois voisines vivantes devient
-//        vivante (elle naît).
-//    - Une cellule vivante possédant deux ou trois voisines vivantes le reste,
-//        sinon elle meurt."
-//    (https://en.wikipedia.org/wiki/Conway's_Game_of_Life)
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 #include "sg.h"
 #include "gol.h"
 
+#define EINGRAU COLOR(22, 22, 29)
+#define IVORY   COLOR(191, 191, 191)
+
 #define WIDTH 900
 #define HEIGHT 900
-#define BGCOLOR BLACK
-#define FGCOLOR WHITE
+#define BGCOLOR EINGRAU
+#define FGCOLOR IVORY
 #define TITLE "Game of Life"
 
 int main(void) {
@@ -38,11 +31,18 @@ int main(void) {
   sg_open(WIDTH, HEIGHT, BGCOLOR, FGCOLOR, TITLE);
   board b;
   board_init(&b);
-  ic_blinker(&b, 2, 2);
+  ic_blinker(&b, 5, 5);
   while (sg_get_key() != 'q') {
     board_draw(&b);
     board_update(&b);
-    printf("Génération %d\n", b.gen);
+    printf("Génération %d :\n", b.gen);
+    for (int x = 0; x < BOARD_SIZE; ++x) {
+      for (int y = 0; y < BOARD_SIZE; ++y) {
+        printf("[%d][%d] = %d --> %d\n",
+            x, y, b.curr_gen[x][y], b.next_gen[x][y]);
+      }
+    }
+    board_upgrade(&b);
   }
   sg_close();
   return EXIT_SUCCESS;

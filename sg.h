@@ -11,7 +11,7 @@
 //  sg_open : ouvre une fenêtre de largeur, hauteur, couleur d'arrière plan,
 //    couleur de premier plan et titre spécifiés par les paramètres width,
 //    height, bgcolor, fgcolor et title. Ni la largeur, ni la hauteur, ni la
-//    couleur d'arrière plan ne peuvent modifiées durant l'existence de la
+//    couleur d'arrière plan ne peuventn être modifiées durant l'existence de la
 //    fenêtre. La couleur de premier plan ou le titre peuvent l'être. Le
 //    placement de la fenêtre est laissé au gestionnaire de fenêtre
 extern void sg_open(unsigned int width, unsigned int height,
