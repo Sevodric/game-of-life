@@ -1,6 +1,5 @@
 //  À FAIRE :
-//    - PRIORITÉ : perfectionner la fonction board_update pour prendre en compte
-//      les bords du plateau
+//    - Faire en sorte de rendre le plateau infini en "enroulant" les bords
 //    - Ajouter des fonctions d'initialisation de configurations de départ
 //    - Afficher la génération actuelle et le nombre de cellules vivantes dans
 //      la barre de titre
@@ -31,8 +30,11 @@ int main(void) {
   sg_open(WIDTH, HEIGHT, BGCOLOR, FGCOLOR, TITLE);
   board b;
   board_init(&b);
-  ic_glider(&b, 3, 3);
-  ic_blinker(&b, 15, 15);
+  ic_blinker(&b, 10, 10);
+  ic_toad(&b, 20, 10);
+  ic_beacon(&b, 30, 10);
+  ic_pulsar(&b, 45, 10);
+  
   board_draw(&b);
   printf("Génération %d\n", b.gen);
   while (sg_get_key() != 'q') {
