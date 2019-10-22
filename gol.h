@@ -1,5 +1,5 @@
 //  Le jeu de la vie, selon les règles de John Conway :
-//    "À chaque étape, l’évolution d’une cellule est entièrement déterminée par
+//    À chaque étape, l’évolution d’une cellule est entièrement déterminée par
 //    l’état de ses huit voisines de la façon suivante :
 //
 //    - Une cellule morte possédant exactement trois voisines vivantes devient

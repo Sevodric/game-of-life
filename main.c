@@ -32,6 +32,7 @@ int main(void) {
   board b;
   board_init(&b);
   ic_glider(&b, 3, 3);
+  ic_blinker(&b, 15, 15);
   while (sg_get_key() != 'q') {
     board_draw(&b);
     board_update(&b);
