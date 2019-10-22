@@ -33,17 +33,13 @@ int main(void) {
   board_init(&b);
   ic_glider(&b, 3, 3);
   ic_blinker(&b, 15, 15);
+  board_draw(&b);
+  printf("Génération %d\n", b.gen);
   while (sg_get_key() != 'q') {
-    board_draw(&b);
     board_update(&b);
-    printf("Génération %d :\n", b.gen);
-    for (int x = 0; x < BOARD_SIZE; ++x) {
-      for (int y = 0; y < BOARD_SIZE; ++y) {
-        printf("[%d][%d] = %d --> %d\n",
-            x, y, b.curr_gen[x][y], b.next_gen[x][y]);
-      }
-    }
     board_upgrade(&b);
+    board_draw(&b);
+    printf("Génération %d\n", b.gen);
   }
   sg_close();
   return EXIT_SUCCESS;

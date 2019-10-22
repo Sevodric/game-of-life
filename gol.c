@@ -52,8 +52,6 @@ void board_draw(board *ptr) {
   FOR_EACH_CELL(
     if (ptr->curr_gen[x][y] == 1) {
       sg_fill_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-    } else {
-      sg_draw_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
     }
   )
 }
