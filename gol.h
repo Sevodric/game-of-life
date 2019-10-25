@@ -1,3 +1,11 @@
+//  À FAIRE :
+//    - Afficher la génération actuelle et le nombre de cellules vivantes dans
+//      la barre de titre
+//    - Définir une structure contenant les informations utiles (n-ième
+//      génération, nombre de cellules vivantes, etc)
+//    - Optimiser la complexité en mettant à jour et en redessinant uniquement
+//      les parties affectées du plateau
+
 //  Le jeu de la vie, selon les règles de John Conway :
 //    À chaque étape, l’évolution d’une cellule est entièrement déterminée par
 //    l’état de ses huit voisines de la façon suivante :
@@ -42,7 +50,6 @@ extern int alive_neighbors(board *ptr, int x, int y);
 
 //  Quelques configurations initiales du jeu de la vie :
 //  (https://en.wikipedia.org/wiki/Conway's_Game_of_Life#Examples_of_patterns)
-
 //  Les fonctions suivantes crééent des configurations initiales remarquables,
 //    dont un aperçu est donné au bout du lien ci-dessus. Les figures sont
 //    centrées, si possible, autour de la cellule de coordonnées x, y
@@ -59,7 +66,7 @@ extern void ic_lwss(board *ptr, int x, int y);
 extern void ic_mwss(board *ptr, int x, int y);
 extern void ic_hwss(board *ptr, int x, int y);
 
-//  Methuselahs
+//  Mathusalems
 extern void ic_rpentomino(board *ptr, int x, int y);
 extern void ic_diehard(board *ptr, int x, int y);
 extern void ic_acorn(board *ptr, int x, int y);

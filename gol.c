@@ -19,7 +19,7 @@ void board_init(board *ptr) {
   FOR_EACH_CELL(
     ptr->curr_gen[x][y] = DEAD;
     ptr->next_gen[x][y] = DEAD;
-    )
+  )
   ptr->gen = 0;
 }
 
@@ -61,12 +61,38 @@ void board_draw(board *ptr) {
 
 int alive_neighbors(board *ptr, int x, int y) {
   int n = 0;
-  for (int i = x - 1; i <= x + 1; ++i) {
-    for (int j = y - 1; j <= y + 1; ++j) {
-      n += ptr->curr_gen[i][j];
+  
+  //  Si la cellule à évaluer est située sur le bord gauche, prend en compte les
+  //    cellules situées sur le bord droit du plateau en lieu en place des
+  //    inexistantes cellules de gauche. Si la cellule à évaluer est située sur
+  //    le bord droit, applique réciproquement le même comportement. Sinon, 
+  //    évalue les 8 cellules voisines de manière standard
+  if (x == 0) {
+    n += ptr->curr_gen[BOARD_SIZE - 1][y - 1];
+    n += ptr->curr_gen[BOARD_SIZE - 1][y];
+    n += ptr->curr_gen[BOARD_SIZE - 1][y + 1];
+    n += ptr->curr_gen[x][y - 1];
+    n += ptr->curr_gen[x + 1][y - 1];
+    n += ptr->curr_gen[x + 1][y];
+    n += ptr->curr_gen[x + 1][y + 1];
+    n += ptr->curr_gen[x][y + 1];
+  } else if (x == BOARD_SIZE - 1) {
+    n += ptr->curr_gen[x][y - 1];
+    n += ptr->curr_gen[x - 1][y - 1];
+    n += ptr->curr_gen[x - 1][y];
+    n += ptr->curr_gen[x - 1][y + 1];
+    n += ptr->curr_gen[x][y + 1];
+    n += ptr->curr_gen[0][y + 1];
+    n += ptr->curr_gen[0][y];
+    n += ptr->curr_gen[0][y - 1];
+  } else {
+    for (int i = x - 1; i <= x + 1; ++i) {
+      for (int j = y - 1; j <= y + 1; ++j) {
+        n += ptr->curr_gen[i][j];
+      }
     }
+    n -= ptr->curr_gen[x][y];
   }
-  n -= ptr->curr_gen[x][y];
   return n;
 }
 
