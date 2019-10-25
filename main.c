@@ -12,7 +12,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
 #include "sg.h"
 #include "gol.h"
 
@@ -26,14 +25,19 @@
 #define TITLE "Game of Life"
 
 int main(void) {
-  srand((unsigned int) time(NULL));
   sg_open(WIDTH, HEIGHT, BGCOLOR, FGCOLOR, TITLE);
   board b;
-  board_init(&b);
-  ic_blinker(&b, 10, 10);
-  ic_toad(&b, 20, 10);
-  ic_beacon(&b, 30, 10);
-  ic_pulsar(&b, 45, 10);
+  board_init(&b);  
+  // Quelques configurations initiales
+  //ic_blinker(&b, 10, 10);
+  //ic_toad(&b, 20, 10);
+  //ic_beacon(&b, 30, 10);
+  //ic_pulsar(&b, 45, 10);
+  //ic_lwss(&b, 10, 25);
+  //ic_mwss(&b, 10, 35);
+  //ic_hwss(&b, 10, 45);
+  
+  ic_diehard(&b, 45, 45);
   
   board_draw(&b);
   printf("Génération %d\n", b.gen);
