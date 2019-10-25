@@ -1,6 +1,9 @@
 //  À FAIRE :
 //    - Afficher la génération actuelle et le nombre de cellules vivantes dans
 //      la barre de titre
+//    - Implanter un éditeur de plateau basique permettant de définir
+//      manuellement, directement depuis la fenêtre, l'état des cellules
+//    - Passage à la génération suivante automatique et à vitesse variable
 //    - Définir une structure contenant les informations utiles (n-ième
 //      génération, nombre de cellules vivantes, etc)
 //    - Optimiser la complexité en mettant à jour et en redessinant uniquement
@@ -19,8 +22,8 @@
 #ifndef GOL__H
 #define GOL__H
 
-#define BOARD_SIZE 90
-#define CELL_SIZE 10
+#define BOARD_SIZE 200
+#define CELL_SIZE 5
 
 typedef struct {
   int curr_gen[BOARD_SIZE][BOARD_SIZE];

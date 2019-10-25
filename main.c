@@ -4,10 +4,10 @@
 #include "gol.h"
 
 #define EINGRAU COLOR(22, 22, 29)
-#define IVORY   COLOR(191, 191, 191)
+#define IVORY   COLOR(200, 200, 200)
 
-#define WIDTH 900
-#define HEIGHT 900
+#define WIDTH 1000
+#define HEIGHT 1000
 #define BGCOLOR EINGRAU
 #define FGCOLOR IVORY
 #define TITLE "Game of Life"

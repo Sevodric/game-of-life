@@ -13,8 +13,6 @@
     }                                                                          \
   }
 
-//  ----------------------------------------------------------------------------
-
 void board_init(board *ptr) {
   FOR_EACH_CELL(
     ptr->curr_gen[x][y] = DEAD;
@@ -51,18 +49,18 @@ void board_upgrade(board *ptr) {
 }
 
 void board_draw(board *ptr) {
-  //  
   sg_clear();
   FOR_EACH_CELL(
     if (ptr->curr_gen[x][y] == ALIVE) {
-      sg_fill_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+      sg_fill_rectangle(x * CELL_SIZE + 1, y * CELL_SIZE + 1, CELL_SIZE - 1,
+          CELL_SIZE - 1);
     }
   )
 }
 
+
 int alive_neighbors(board *ptr, int x, int y) {
   int n = 0;
-  
   //  Si la cellule à évaluer est située sur le bord gauche, prend en compte les
   //    cellules situées sur le bord droit du plateau en lieu en place des
   //    inexistantes cellules de gauche. Si la cellule à évaluer est située sur
