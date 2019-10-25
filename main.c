@@ -1,15 +1,3 @@
-//  À FAIRE :
-//    - Faire en sorte de rendre le plateau infini en "enroulant" les bords
-//    - Ajouter des fonctions d'initialisation de configurations de départ
-//    - Afficher la génération actuelle et le nombre de cellules vivantes dans
-//      la barre de titre
-//    - Définir une structure contenant les informations utiles (n-ième
-//      génération, nombre de cellules vivantes, etc)
-//    - Optimiser la complexité en mettant à jour et en redessinant uniquement
-//      les parties affectées du plateau
-
-//  ----------------------------------------------------------------------------
-
 #include <stdlib.h>
 #include <stdio.h>
 #include "sg.h"
@@ -28,16 +16,16 @@ int main(void) {
   sg_open(WIDTH, HEIGHT, BGCOLOR, FGCOLOR, TITLE);
   board b;
   board_init(&b);  
-  // Quelques configurations initiales
-  //ic_blinker(&b, 10, 10);
-  //ic_toad(&b, 20, 10);
-  //ic_beacon(&b, 30, 10);
-  //ic_pulsar(&b, 45, 10);
-  //ic_lwss(&b, 10, 25);
-  //ic_mwss(&b, 10, 35);
-  //ic_hwss(&b, 10, 45);
   
-  ic_diehard(&b, 45, 45);
+  // Quelques configurations initiales
+  ic_blinker(&b, 10, 10);
+  ic_toad(&b, 20, 10);
+  ic_beacon(&b, 30, 10);
+  ic_pulsar(&b, 45, 10);
+  ic_glider(&b, 10, 25);
+  ic_lwss(&b, 20, 25);
+  ic_mwss(&b, 20, 35);
+  ic_hwss(&b, 20, 45);
   
   board_draw(&b);
   printf("Génération %d\n", b.gen);

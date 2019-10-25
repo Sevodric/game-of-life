@@ -51,6 +51,7 @@ void board_upgrade(board *ptr) {
 }
 
 void board_draw(board *ptr) {
+  //  
   sg_clear();
   FOR_EACH_CELL(
     if (ptr->curr_gen[x][y] == ALIVE) {
