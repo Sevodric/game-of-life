@@ -4,8 +4,6 @@
 //    - Implanter un éditeur de plateau basique permettant de définir
 //      manuellement, directement depuis la fenêtre, l'état des cellules
 //    - Passage à la génération suivante automatique et à vitesse variable
-//    - Définir une structure contenant les informations utiles (n-ième
-//      génération, nombre de cellules vivantes, etc)
 //    - Optimiser la complexité en mettant à jour et en redessinant uniquement
 //      les parties affectées du plateau
 
@@ -28,7 +26,9 @@
 typedef struct {
   int curr_gen[BOARD_SIZE][BOARD_SIZE];
   int next_gen[BOARD_SIZE][BOARD_SIZE];
-  int gen;
+  unsigned int gen;
+  unsigned int curr_total;
+  unsigned int next_total;
 } board;
 
 //  board_init : initialise le plateau pointé par ptr avec des celulles mortes
@@ -48,6 +48,8 @@ extern void board_draw(board *ptr);
 //  alive_neighbors : renvoie le nombre de cellules voisines vivantes de la
 //    cellule de coordonnées x, y du plateau pointé par ptr
 extern int alive_neighbors(board *ptr, int x, int y);
+
+unsigned int alive_total(board *ptr);
 
 //  ----------------------------------------------------------------------------
 

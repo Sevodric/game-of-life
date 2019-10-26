@@ -19,6 +19,8 @@ void board_init(board *ptr) {
     ptr->next_gen[x][y] = DEAD;
   )
   ptr->gen = 0;
+  ptr->curr_total = 0;
+  ptr->next_total = 0;
 }
 
 void board_update(board *ptr) {
@@ -28,10 +30,12 @@ void board_update(board *ptr) {
         ptr->next_gen[x][y] = ALIVE;
       } else {
         ptr->next_gen[x][y] = DEAD;
+        ptr->next_total -= 1;
       }
     } else if (ptr->curr_gen[x][y] == DEAD) {
       if (alive_neighbors(ptr, x, y) == 3) {
         ptr->next_gen[x][y] = ALIVE;
+        ptr->next_total += 1;
       } else {
         ptr->next_gen[x][y] = DEAD;
       }
@@ -46,6 +50,7 @@ void board_upgrade(board *ptr) {
     ptr->curr_gen[x][y] = ptr->next_gen[x][y];
   )
   ptr->gen += 1;
+  ptr->curr_total = ptr->next_total;
 }
 
 void board_draw(board *ptr) {
@@ -57,7 +62,6 @@ void board_draw(board *ptr) {
     }
   )
 }
-
 
 int alive_neighbors(board *ptr, int x, int y) {
   int n = 0;
@@ -92,6 +96,14 @@ int alive_neighbors(board *ptr, int x, int y) {
     }
     n -= ptr->curr_gen[x][y];
   }
+  return n;
+}
+
+unsigned int alive_total(board *ptr) {
+  unsigned int n = 0;
+  FOR_EACH_CELL(
+    n += (unsigned int) ptr->curr_gen[x][y];
+  )
   return n;
 }
 
