@@ -1,27 +1,8 @@
-//  À FAIRE :
-//    - Afficher la génération actuelle et le nombre de cellules vivantes dans
-//      la barre de titre
-//    - Implanter un éditeur de plateau basique permettant de définir
-//      manuellement, directement depuis la fenêtre, l'état des cellules
-//    - Passage à la génération suivante automatique et à vitesse variable
-//    - Optimiser la complexité en mettant à jour et en redessinant uniquement
-//      les parties affectées du plateau
-
-//  Le jeu de la vie, selon les règles de John Conway :
-//    À chaque étape, l’évolution d’une cellule est entièrement déterminée par
-//    l’état de ses huit voisines de la façon suivante :
-//
-//    - Une cellule morte possédant exactement trois voisines vivantes devient
-//        vivante (elle naît).
-//    - Une cellule vivante possédant deux ou trois voisines vivantes le reste,
-//        sinon elle meurt."
-//    (https://en.wikipedia.org/wiki/Conway's_Game_of_Life)
-
 #ifndef GOL__H
 #define GOL__H
 
-#define BOARD_SIZE 200
-#define CELL_SIZE 5
+#define BOARD_SIZE 100
+#define CELL_SIZE 10
 
 typedef struct {
   int curr_gen[BOARD_SIZE][BOARD_SIZE];
@@ -49,6 +30,8 @@ extern void board_draw(board *ptr);
 //    cellule de coordonnées x, y du plateau pointé par ptr
 extern int alive_neighbors(board *ptr, int x, int y);
 
+//  alive_total : renvoie le nombre de cellules vivantes du plateau pointé par
+//    ptr
 unsigned int alive_total(board *ptr);
 
 //  ----------------------------------------------------------------------------
