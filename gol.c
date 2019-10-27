@@ -109,7 +109,7 @@ unsigned int alive_total(board *ptr) {
   return n;
 }
 
-#define USAGE "('space' = on/off, arrows = move, 'enter' = confirm)"
+#define USAGE "('space' = on/off, arrows = move, 'escape' = confirm)"
 
 void board_edit(board *ptr) {
   // Initialise la touche pressée et définie les coodronnées du curseur au 
@@ -121,7 +121,7 @@ void board_edit(board *ptr) {
   // Modifie le titre de la fenêtre
   sg_set_title("Live editing " USAGE);
   
-  
+  // Boucle de l'éditeur
   while (1) {
     // Dessine le curseur
     sg_set_fgcolor(RED);
@@ -138,12 +138,14 @@ void board_edit(board *ptr) {
     if (key == KEY_SPACE) {
       if (ptr->curr_gen[x][y] == ALIVE) {
         ptr->curr_gen[x][y] = DEAD;
+        ptr->curr_total -= 1;
         sg_set_fgcolor(EINGRAU);
         sg_fill_rectangle(x * CELL_SIZE + 1, y * CELL_SIZE + 1, CELL_SIZE,
             CELL_SIZE);
         sg_set_fgcolor(IVORY);
       } else if (ptr->curr_gen[x][y] == DEAD) {
         ptr->curr_gen[x][y] = ALIVE;
+        ptr->curr_total += 1;
         sg_fill_rectangle(x * CELL_SIZE + 1, y * CELL_SIZE + 1, CELL_SIZE,
             CELL_SIZE);
       }
@@ -152,24 +154,15 @@ void board_edit(board *ptr) {
     // Si une des touches directionnelles est pressée, et si la taille du
     //    plateau le permet, efface le curseur précédent et modifie la
     //    coordonnée correspondante
+    sg_set_fgcolor(EINGRAU);
+    sg_draw_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
     if (key == KEY_RIGHT && x < BOARD_SIZE - 1) {
-      sg_set_fgcolor(EINGRAU);
-      sg_draw_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
       ++x;
-    }
-    if (key == KEY_LEFT && x > 0) {
-      sg_set_fgcolor(EINGRAU);
-      sg_draw_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+    } else if (key == KEY_LEFT && x > 0) {
       --x;
-    }
-    if (key == KEY_DOWN && y < BOARD_SIZE - 1) {
-      sg_set_fgcolor(EINGRAU);
-      sg_draw_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+    } else if (key == KEY_DOWN && y < BOARD_SIZE - 1) {
       ++y;
-    }
-    if (key == KEY_UP && x > 0) {
-      sg_set_fgcolor(EINGRAU);
-      sg_draw_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+    } else if (key == KEY_UP && x > 0) {
       --y;
     }
     
@@ -179,11 +172,6 @@ void board_edit(board *ptr) {
       sg_set_fgcolor(EINGRAU);
       sg_draw_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
       sg_set_fgcolor(IVORY);
-      board_update(ptr);
-      board_upgrade(ptr);
-      // Corrige la génération (la mise à jour du plateau a incrémenté la
-      //    génération, mais cette dernière n'a pas bougé)
-      ptr->gen -= 1;
       return;
     }
   }

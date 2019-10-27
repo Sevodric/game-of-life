@@ -1,6 +1,4 @@
 //  À FAIRE :
-//    - Implanter un éditeur de plateau basique permettant de définir
-//      manuellement, directement depuis la fenêtre, l'état des cellules
 //    - Passage à la génération suivante automatique et à vitesse variable
 //    - Optimiser la complexité en mettant à jour et en redessinant uniquement
 //      les parties affectées du plateau
@@ -35,13 +33,13 @@ int main(void) {
   board b;
   board_init(&b);
   ic_blinker(&b, 10, 10);
-  ic_toad(&b, 20, 10);
-  ic_beacon(&b, 30, 10);
-  ic_pulsar(&b, 45, 10);
+  //ic_toad(&b, 20, 10);
+  //ic_beacon(&b, 30, 10);
+  //ic_pulsar(&b, 45, 10);
   ic_glider(&b, 10, 25);
-  ic_lwss(&b, 20, 25);
-  ic_mwss(&b, 20, 35);
-  ic_hwss(&b, 20, 45);
+  //ic_lwss(&b, 20, 25);
+  //ic_mwss(&b, 20, 35);
+  //ic_hwss(&b, 20, 45);
   
   // Compte le nombre de cellules vivantes initiales
   b.curr_total = alive_total(&b);
