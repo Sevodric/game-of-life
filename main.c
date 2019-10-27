@@ -20,14 +20,6 @@
 #include "sg.h"
 #include "gol.h"
 
-// Couleurs de fond et des cellules
-#define EINGRAU COLOR(22, 22, 29)
-#define IVORY   COLOR(200, 200, 200)
-
-// Codes ASCII des touches ammenées à êtres pressées
-#define Q 113
-#define SPACE 32
-
 // Propriétés de la fenêtre
 #define WIDTH 1000
 #define HEIGHT 1000
@@ -35,7 +27,7 @@
 #define FGCOLOR IVORY
 
 // Instructions
-#define USAGE "('space' = next gen, 'q' = quit)"
+#define USAGE "('space' = next gen, 'e' = editor, 'q' = quit)"
 
 int main(void) {
   
@@ -56,34 +48,45 @@ int main(void) {
   b.next_total = b.curr_total;
   
   // Initialise la touche pressée à SPACE pour éxécuter une première boucle
-  int key = SPACE;
+  int key = KEY_SPACE;
   
-  // Initialise le titre de la fenêtre et ouvre cette dernière
+  // Initialise le titre de la fenêtre, ouvre cette dernière et dessine le
+  //    plateau initial
   char title[100];  
   sprintf(title, "Life : %uth generation , %u cells alive " USAGE, b.gen,
       b.curr_total);
   sg_open(WIDTH, HEIGHT, BGCOLOR, FGCOLOR, title);
-
+  board_draw(&b);
+  
   // Boucle principale
   while (1) {
-    if (key == Q) {
+    if (key == KEY_Q) {
       break;
     }
     
-    // Passe à la génération suivante si la touche ESPACE est pressée
-    if (key == SPACE) {
+    // Si la touche KEY_E est pressée, entre dans le mode d'édition
+    if (key == KEY_E) {
+      board_edit(&b);
+      sprintf(title, "Life : %uth generation , %u cells alive " USAGE, b.gen,
+          b.curr_total);
+      sg_set_title(title);
+      key = 0;
+    }
+    
+    // Actualise le plateau si la touche SPACE est pressée
+    if (key == KEY_SPACE) {
+      board_update(&b);
+      board_upgrade(&b);
       board_draw(&b);
       sprintf(title, "Life : %uth generation , %u cells alive " USAGE, b.gen,
           b.curr_total);
       sg_set_title(title);
-      board_update(&b);
-      board_upgrade(&b);
     }
     
+    // Actualise la touche pressée
     key = sg_get_key();
   }
   
-  // Ferme la fenêtre et le programme
   sg_close();
   return EXIT_SUCCESS;
 }
