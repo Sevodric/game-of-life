@@ -126,13 +126,12 @@ void board_edit(board *ptr) {
     // Dessine le curseur
     sg_set_fgcolor(RED);
     sg_draw_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-    sg_set_fgcolor(IVORY);
     
     // Actualise la touche pressée 
     key = sg_get_key();
     
     // Si la touche SPACE est pressée, modifie la valeur de la cellule de
-    //    coordonnées x et y du plateau ptr à DEAD ou ALIVE si la valeur de
+    //    coordonnées x et y du plateau ptr à DEAD ou ALIVE, si la valeur de
     //    cette dernière est respectivment ALIVE ou DEAD. Dessine ensuite la
     //    cellule avec la couleur appropriée
     if (key == KEY_SPACE) {
@@ -146,31 +145,51 @@ void board_edit(board *ptr) {
       } else if (ptr->curr_gen[x][y] == DEAD) {
         ptr->curr_gen[x][y] = ALIVE;
         ptr->curr_total += 1;
+        sg_set_fgcolor(GREEN);
         sg_fill_rectangle(x * CELL_SIZE + 1, y * CELL_SIZE + 1, CELL_SIZE,
             CELL_SIZE);
       }
     }
     
-    // Si une des touches directionnelles est pressée, et si la taille du
-    //    plateau le permet, efface le curseur précédent et modifie la
-    //    coordonnée correspondante
+    // Efface le curseur précédent
     sg_set_fgcolor(EINGRAU);
     sg_draw_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
-    if (key == KEY_RIGHT && x < BOARD_SIZE - 1) {
-      ++x;
-    } else if (key == KEY_LEFT && x > 0) {
-      --x;
-    } else if (key == KEY_DOWN && y < BOARD_SIZE - 1) {
-      ++y;
-    } else if (key == KEY_UP && x > 0) {
-      --y;
+    
+    // Si une des touches directionnelles est pressée, modifie la coordonnée
+    //    correspondante. Dans le cas où le curseur devait sortir du plateau, il
+    //    est téléporté de l'autre côté de ce dernier.
+    if (key == KEY_RIGHT) {
+      if (x == BOARD_SIZE - 1) {
+        x = 0;
+      } else {
+        ++x;
+      }
+    }
+    if (key == KEY_LEFT) {
+      if (x == 0) {
+        x = BOARD_SIZE - 1;
+      } else {
+        --x;
+      }
+    }
+    if (key == KEY_DOWN) {
+      if (y == BOARD_SIZE - 1) {
+        y = 0;
+      } else {
+        ++y;
+      }
+    }
+    if (key == KEY_UP) {
+      if (y == 0) {
+        y = BOARD_SIZE - 1;
+      } else {
+        --y;
+      }
     }
     
-    // Si la touche ESCAPE est pressée, efface le curseur, met à jour le plateau
-    //    avec les nouvelles cellules, et sort du mode d'édition
+    // Si la touche ESCAPE est pressée, réinitialise la couleur de dessin et
+    //    sort du mode d'édition
     if (key == KEY_ESC) {
-      sg_set_fgcolor(EINGRAU);
-      sg_draw_rectangle(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
       sg_set_fgcolor(IVORY);
       return;
     }
@@ -346,6 +365,3 @@ void ic_rand(board *ptr) {
     ptr->curr_gen[x][y] = rand() % 2;
   )
 }
-
-
-

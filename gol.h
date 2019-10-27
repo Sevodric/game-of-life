@@ -4,6 +4,7 @@
 // Couleurs de fond et des cellules
 #define EINGRAU COLOR(22, 22, 29)
 #define IVORY   COLOR(200, 200, 200)
+#define GREEN   COLOR(53, 157, 65)
 
 // Codes des touches ammenées à êtres pressées, tels que renvoyés par la
 //    la fonction sg_get_key() de la bibliothèque Simple Graph (voir X11/keysim)
