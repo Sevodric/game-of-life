@@ -20,10 +20,11 @@
 #include "sg.h"
 #include "gol.h"
 
+// Couleurs de fond et des cellules
 #define EINGRAU COLOR(22, 22, 29)
 #define IVORY   COLOR(200, 200, 200)
 
-// Codes ASCII
+// Codes ASCII des touches ammenées à êtres pressées
 #define Q 113
 #define SPACE 32
 
@@ -32,10 +33,13 @@
 #define HEIGHT 1000
 #define BGCOLOR EINGRAU
 #define FGCOLOR IVORY
-#define INST "('space' = next gen, 'q' = quit)"
+
+// Instructions
+#define USAGE "('space' = next gen, 'q' = quit)"
 
 int main(void) {
-  // Initialisation du plateau et des éventuelles configurations initiales
+  
+  // Initialise le plateau et les éventuelles configurations initiales
   board b;
   board_init(&b);
   ic_blinker(&b, 10, 10);
@@ -46,24 +50,30 @@ int main(void) {
   ic_lwss(&b, 20, 25);
   ic_mwss(&b, 20, 35);
   ic_hwss(&b, 20, 45);
+  
+  // Compte le nombre de cellules vivantes initiales
   b.curr_total = alive_total(&b);
   b.next_total = b.curr_total;
   
-  char title[100];
+  // Initialise la touche pressée à SPACE pour éxécuter une première boucle
   int key = SPACE;
-  sprintf(title, "Life : %uth generation , %u cells alive " INST, b.gen,
+  
+  // Initialise le titre de la fenêtre et ouvre cette dernière
+  char title[100];  
+  sprintf(title, "Life : %uth generation , %u cells alive " USAGE, b.gen,
       b.curr_total);
   sg_open(WIDTH, HEIGHT, BGCOLOR, FGCOLOR, title);
 
   // Boucle principale
   while (1) {
     if (key == Q) {
-      sg_close();
+      break;
     }
     
+    // Passe à la génération suivante si la touche ESPACE est pressée
     if (key == SPACE) {
       board_draw(&b);
-      sprintf(title, "Life : %uth generation , %u cells alive " INST, b.gen,
+      sprintf(title, "Life : %uth generation , %u cells alive " USAGE, b.gen,
           b.curr_total);
       sg_set_title(title);
       board_update(&b);
@@ -72,5 +82,8 @@ int main(void) {
     
     key = sg_get_key();
   }
+  
+  // Ferme la fenêtre et le programme
+  sg_close();
   return EXIT_SUCCESS;
 }
