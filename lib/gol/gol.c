@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <time.h>
-#include "sg.h"
+#include "../sg/sg.h"
 #include "gol.h"
 
 #define ALIVE 1

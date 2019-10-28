@@ -1,8 +1,3 @@
-//  À FAIRE :
-//    - Passage à la génération suivante automatique et à vitesse variable
-//    - Optimiser la complexité en mettant à jour et en redessinant uniquement
-//      les parties affectées du plateau
-
 //  Le jeu de la vie, selon les règles de John Conway :
 //    À chaque étape, l’évolution d’une cellule est entièrement déterminée par
 //    l’état de ses huit voisines de la façon suivante :
@@ -15,8 +10,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "sg.h"
-#include "gol.h"
+#include "lib/sg/sg.h"
+#include "lib/gol/gol.h"
 
 // Propriétés de la fenêtre
 #define WIDTH 1000

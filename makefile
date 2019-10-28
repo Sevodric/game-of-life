@@ -1,9 +1,10 @@
-sgdir = sg/
+sgdir = lib/sg/
+goldir = lib/gol/
 CC = gcc
-CFLAGS = -std=c11 -Wall -Wconversion -Werror -Wextra -Wpedantic -Wwrite-strings -O2 -D_POSIX_C_SOURCE=200809L -I$(sgdir)
+CFLAGS = -std=c11 -Wall -Wconversion -Werror -Wextra -Wpedantic -Wwrite-strings -O2
 LDFLAGS = -lX11 -lm
-VPATH=$(sgdir)
-objects = main.o gol.o $(sgdir)sg.o
+VPATH = $(sgdir) $(goldir)
+objects = main.o $(goldir)gol.o $(sgdir)sg.o
 executable = main
 
 all: $(executable)
@@ -14,6 +15,6 @@ clean:
 $(executable): $(objects)
 	$(CC) $(objects) $(LDFLAGS) -o $(executable)
 
-main.o: main.c sg.h gol.h
-gol.o: gol.c gol.h
-$(sgdir)sg.o: sg.c sg.h
+main.o: main.c
+$(goldir)gol.o: $(goldir)gol.c $(goldir)gol.h
+$(sgdir)sg.o: $(sgdir)sg.c $(sgdir)sg.h
