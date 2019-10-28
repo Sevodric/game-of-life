@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "lib/sg/sg.h"
 #include "lib/gol/gol.h"
+#include "lib/gol/ic.h"
 
 // Propriétés de la fenêtre
 #define WIDTH 1000

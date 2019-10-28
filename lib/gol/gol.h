@@ -17,6 +17,18 @@
 #define KEY_SPACE 32
 #define KEY_ESC 65307
 
+// État des cellules
+#define ALIVE 1
+#define DEAD 0
+
+// Macrofonction de la flemme
+#define FOR_EACH_CELL(X)                                                       \
+  for (int x = 0; x < BOARD_SIZE; ++x) {                                       \
+    for (int y = 0; y < BOARD_SIZE; ++y) {                                     \
+      X                                                                        \
+    }                                                                          \
+  }
+
 // Taille du plateau et des cellules
 #define BOARD_SIZE 100
 #define CELL_SIZE 10
@@ -49,33 +61,5 @@ extern unsigned int alive_total(board *ptr);
 
 //  board_edit : entre dans le mode d'édition du plateau pointé par ptr
 extern void board_edit(board *ptr);
-
-//  ----------------------------------------------------------------------------
-
-//  Quelques configurations initiales du jeu de la vie :
-//  (https://en.wikipedia.org/wiki/Conway's_Game_of_Life#Examples_of_patterns)
-//  Les fonctions suivantes crééent des configurations initiales remarquables,
-//    dont un aperçu est donné au bout du lien ci-dessus. Les figures sont
-//    centrées, si possible, autour de la cellule de coordonnées x, y
-
-//  Oscillateurs
-extern void ic_blinker(board *ptr, int x, int y);
-extern void ic_toad(board *ptr, int x, int y);
-extern void ic_beacon(board *ptr, int x, int y);
-extern void ic_pulsar(board *ptr, int x, int y);
-
-//  Vaisseaux
-extern void ic_glider(board *ptr, int x, int y);
-extern void ic_lwss(board *ptr, int x, int y);
-extern void ic_mwss(board *ptr, int x, int y);
-extern void ic_hwss(board *ptr, int x, int y);
-
-//  Mathusalems
-extern void ic_rpentomino(board *ptr, int x, int y);
-extern void ic_diehard(board *ptr, int x, int y);
-extern void ic_acorn(board *ptr, int x, int y);
-
-//  Configuration initiale aléaoire
-extern void ic_rand(board *ptr);
 
 #endif
