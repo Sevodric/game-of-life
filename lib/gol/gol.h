@@ -10,6 +10,7 @@
 //    la fonction sg_get_key() de la bibliothèque Simple Graph (voir X11/keysim)
 #define KEY_E 101
 #define KEY_Q 113
+#define KEY_C 99
 #define KEY_UP 65362
 #define KEY_LEFT 65361
 #define KEY_DOWN 65364

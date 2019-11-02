@@ -10,9 +10,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "lib/sg/sg.h"
-#include "lib/gol/gol.h"
-#include "lib/gol/ic.h"
+#include "sg.h"
+#include "gol.h"
+#include "ic.h"
 
 // Propriétés de la fenêtre
 #define WIDTH 1000
@@ -36,7 +36,7 @@ int main(void) {
   ic_lwss(&b, 20, 25);
   ic_mwss(&b, 20, 35);
   ic_hwss(&b, 20, 45);
-  
+    
   // Compte le nombre de cellules vivantes initiales
   b.curr_total = alive_total(&b);
   b.next_total = b.curr_total;

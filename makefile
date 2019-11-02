@@ -1,8 +1,7 @@
 sgdir = lib/sg/
 goldir = lib/gol/
-icdir = lib/gol/
 CC = gcc
-CFLAGS = -std=c11 -Wall -Wconversion -Werror -Wextra -Wpedantic -Wwrite-strings -O2
+CFLAGS = -std=c11 -Wall -Wconversion -Werror -Wextra -Wpedantic -Wwrite-strings -O2 -I$(sgdir) -I$(goldir)
 LDFLAGS = -lX11 -lm
 VPATH = $(sgdir) $(goldir)
 objects = main.o $(goldir)gol.o $(sgdir)sg.o $(icdir)ic.o

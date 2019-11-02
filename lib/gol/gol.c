@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <time.h>
-#include "../sg/sg.h"
+#include "sg.h"
 #include "gol.h"
 
 //  alive_neighbors : renvoie le nombre de cellules voisines vivantes de la
@@ -99,7 +99,7 @@ unsigned int alive_total(board *ptr) {
   return n;
 }
 
-#define USAGE "('space' = on/off, arrows = move, 'escape' = confirm)"
+#define USAGE "('space' = on/off, 'c' = clean, arrows = move, 'escape' = confirm)"
 
 void board_edit(board *ptr) {
   // Initialise la touche pressée et définie les coodronnées du curseur au 
@@ -128,6 +128,7 @@ void board_edit(board *ptr) {
       if (ptr->curr_gen[x][y] == ALIVE) {
         ptr->curr_gen[x][y] = DEAD;
         ptr->curr_total -= 1;
+        ptr->next_total -= 1;
         sg_set_fgcolor(EINGRAU);
         sg_fill_rectangle(x * CELL_SIZE + 1, y * CELL_SIZE + 1, CELL_SIZE,
             CELL_SIZE);
@@ -135,10 +136,22 @@ void board_edit(board *ptr) {
       } else if (ptr->curr_gen[x][y] == DEAD) {
         ptr->curr_gen[x][y] = ALIVE;
         ptr->curr_total += 1;
+        ptr->next_total += 1;
         sg_set_fgcolor(GREEN);
         sg_fill_rectangle(x * CELL_SIZE + 1, y * CELL_SIZE + 1, CELL_SIZE,
             CELL_SIZE);
       }
+    }
+    
+    if (key == KEY_C) {
+      sg_set_fgcolor(EINGRAU);
+      FOR_EACH_CELL(
+        ptr->curr_gen[x][y] = DEAD;
+        sg_fill_rectangle(x * CELL_SIZE + 1, y * CELL_SIZE + 1, CELL_SIZE,
+          CELL_SIZE);
+      )
+      ptr->curr_total = 0;
+      ptr->next_total = 0;
     }
     
     // Efface le curseur précédent
