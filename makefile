@@ -18,4 +18,3 @@ main.o: main.c $(sgdir)sg.h $(goldir)gol.h $(goldir)ic.h
 sg.o: $(sgdir)sg.c $(sgdir)sg.h
 gol.o: $(goldir)gol.c $(sgdir)sg.h $(goldir)gol.h
 ic.o: $(icdir)ic.c $(goldir)gol.h $(icdir)ic.h
-

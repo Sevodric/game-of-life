@@ -15,8 +15,8 @@
 #include "ic.h"
 
 // Propriétés de la fenêtre
-#define WIDTH 1000
-#define HEIGHT 1000
+#define WIDTH 900
+#define HEIGHT 900
 #define BGCOLOR EINGRAU
 #define FGCOLOR IVORY
 

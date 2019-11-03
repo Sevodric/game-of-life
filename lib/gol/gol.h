@@ -31,7 +31,7 @@
   }
 
 // Taille du plateau et des cellules
-#define BOARD_SIZE 100
+#define BOARD_SIZE 90
 #define CELL_SIZE 10
 
 typedef struct {

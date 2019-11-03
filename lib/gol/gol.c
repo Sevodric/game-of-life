@@ -99,7 +99,8 @@ unsigned int alive_total(board *ptr) {
   return n;
 }
 
-#define USAGE "('space' = on/off, 'c' = clean, arrows = move, 'escape' = confirm)"
+#define USAGE "('space' = on/off, 'c' = clear, arrows = move "                 \
+    "'escape' = confirm)"
 
 void board_edit(board *ptr) {
   // Initialise la touche pressée et définie les coodronnées du curseur au 
