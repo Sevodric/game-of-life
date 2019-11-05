@@ -1,7 +1,71 @@
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 #include "sg.h"
 #include "gol.h"
+
+//  --- IMPLÉMENTATION DE LSNAP ------------------------------------------------
+
+#define FUN_SUCCESS 0
+#define FUN_FAILURE -1
+
+lsnap *lsnap_empty(void) {
+  lsnap *ptr = malloc(sizeof(lsnap));
+  if (ptr != NULL) {
+    ptr->head = NULL;
+  }
+  return ptr;
+}
+
+bool lsnap_is_empty(const lsnap *s) {
+  return s->head == NULL;
+}
+
+int lsnap_get_head(const lsnap *s, board *ptr) {
+  if (lsnap_is_empty(s)) {
+    return FUN_FAILURE;
+  }
+  *ptr = s->head->value;
+  return FUN_SUCCESS;
+}
+
+int lsnap_insert_head(lsnap *s, board *ptr) {
+  snap *c = malloc(sizeof(snap));
+  if (c == NULL) {
+    return FUN_FAILURE;
+  }
+  c->value = *ptr;
+  c->next = s->head;
+  s->head = c;
+  return FUN_SUCCESS;
+}
+
+int lsnap_remove_head(lsnap *s) {
+  if (lsnap_is_empty(s)) {
+    return FUN_FAILURE;
+  }
+  snap *t = s->head;
+  s->head = s->head->next;
+  free(t);
+  return FUN_SUCCESS;
+}
+
+void lsnap_dispose(lsnap **sptr) {
+  if (*sptr == NULL) {
+    return;
+  }
+  snap *p = (*sptr)->head;
+  while (p != NULL) {
+    snap *t = p;
+    p = p->next;
+    free(t);
+  }
+  free(p);
+  free(*sptr);
+  *sptr = NULL;
+}
+
+//  --- IMPLÉMENTATION DE BOARD ------------------------------------------------
 
 //  alive_neighbors : renvoie le nombre de cellules voisines vivantes de la
 //    cellule de coordonnées x, y du plateau pointé par ptr
@@ -198,4 +262,9 @@ void board_edit(board *ptr) {
       return;
     }
   }
+}
+
+void board_back(board *ptr, lsnap *lptr) {
+  lsnap_get_head(lptr, ptr);
+  lsnap_remove_head(lptr);
 }

@@ -21,7 +21,8 @@
 #define FGCOLOR IVORY
 
 // Instructions
-#define USAGE "('space' = next gen, 'e' = editor, 'q' = quit)"
+#define USAGE "('space' = next gen, 'backspace' = previous gen 'e' = editor, " \
+    "'q' = quit)"
 
 int main(void) {
   
@@ -42,15 +43,18 @@ int main(void) {
   b.next_total = b.curr_total;
   
   // Initialise la touche pressée à SPACE pour éxécuter une première boucle
-  int key = KEY_SPACE;
+  int key = 0;
   
   // Initialise le titre de la fenêtre, ouvre cette dernière et dessine le
   //    plateau initial
-  char title[100];  
+  char title[150];  
   sprintf(title, "Life : %uth generation , %u cells alive " USAGE, b.gen,
       b.curr_total);
   sg_open(WIDTH, HEIGHT, BGCOLOR, FGCOLOR, title);
   board_draw(&b);
+  
+  // Initialise la liste contenant l'historique du plateau à chaque génération
+  lsnap *history = lsnap_empty();
   
   // Boucle principale
   while (1) {
@@ -69,8 +73,19 @@ int main(void) {
     
     // Actualise le plateau si la touche SPACE est pressée
     if (key == KEY_SPACE) {
+      lsnap_insert_head(history, &b);
       board_update(&b);
       board_upgrade(&b);
+      board_draw(&b);
+      sprintf(title, "Life : %uth generation , %u cells alive " USAGE, b.gen,
+          b.curr_total);
+      sg_set_title(title);
+    }
+    
+    // Revient à la génération précédente si la touche BACKSPACE est pressée
+    //    et si une telle génération existe
+    if (key == KEY_BACKSPACE && b.gen > 0) {
+      board_back(&b, history);
       board_draw(&b);
       sprintf(title, "Life : %uth generation , %u cells alive " USAGE, b.gen,
           b.curr_total);
@@ -81,6 +96,7 @@ int main(void) {
     key = sg_get_key();
   }
   
+  lsnap_dispose(&history);
   sg_close();
   return EXIT_SUCCESS;
 }
