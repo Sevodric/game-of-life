@@ -1,9 +1,8 @@
 /* TODO: 
- *  -> Tranlate all the comments in english
  *  -> Adapt the board's size to a given argument
  *  -> Create a --help command
  *  -> Revamp the history system: save each boards and symply points to them
- *  -> Print informations on the temrminal
+ *  -> Print informations on the terminal
  */
 
 #include <stdlib.h>
@@ -28,15 +27,16 @@ int main(void) {
   if (b == NULL) {
     goto error_capacity;
   }
-  ic_blinker(b, 10, 10);
-  ic_toad(b, 20, 10);
-  ic_beacon(b, 30, 10);
-  ic_pulsar(b, 45, 10);
-  ic_glider(b, 10, 25);
-  ic_lwss(b, 20, 25);
-  ic_mwss(b, 20, 35);
-  ic_hwss(b, 20, 45);
-    
+  //ic_blinker(b, 10, 10);
+  //ic_toad(b, 20, 10);
+  //ic_beacon(b, 30, 10);
+  //ic_pulsar(b, 45, 10);
+  //ic_glider(b, 10, 25);
+  //ic_lwss(b, 20, 25);
+  //ic_mwss(b, 20, 35);
+  //ic_hwss(b, 20, 45);
+  ic_diehard(b, 50, 50);
+
   // Initializes the pressed key to SPACE in order to execute the first loop
   int key = 0;
   
@@ -46,6 +46,7 @@ int main(void) {
   
   // Main loop 
   while (1) {
+    board_displaycheckup(b);
     if (key == KEY_ESC) {
       break;
     }

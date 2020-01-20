@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <time.h>
 #include <stdbool.h>
 #include "sg.h"
@@ -8,8 +9,8 @@
 #define CELL_SIZE 10
 
 // Cell state
-#define ALIVE 1
-#define DEAD 0
+#define ALIVE true
+#define DEAD false
 
 // Some shortcuts
 #define CURR(ptr, x, y) (ptr)->curr_gen[(x)][(y)]
@@ -18,11 +19,11 @@
 #define BOARD_SIZE 90
 
 struct board {
-  int curr_gen[BOARD_SIZE][BOARD_SIZE];
-  int next_gen[BOARD_SIZE][BOARD_SIZE];
-  unsigned int gen;
-  unsigned int curr_total;
-  unsigned int next_total;
+  bool curr_gen[BOARD_SIZE][BOARD_SIZE];
+  bool next_gen[BOARD_SIZE][BOARD_SIZE];
+  size_t gen;
+  size_t curr_total;
+  size_t next_total;
 };
 
 //  alive__nghb: returns the amount of living cells in the neighborhood of the
@@ -110,7 +111,7 @@ void board_upgrade(board *ptr) {
   ptr->curr_total = ptr->next_total;
 }
 
-void board_draw(board *ptr) {
+void board_draw(const board *ptr) {
   sg_clear();
   for (int x = 0; x < BOARD_SIZE; ++x) {
     for (int y = 0; y < BOARD_SIZE; ++y) {
@@ -122,14 +123,8 @@ void board_draw(board *ptr) {
   }
 }
 
-unsigned int alive_total(board *ptr) {
-  unsigned int n = 0;
-  for (int x = 0; x < BOARD_SIZE; ++x) {
-    for (int y = 0; y < BOARD_SIZE; ++y) {
-      n += (unsigned int) CURR(ptr, x, y);
-    }
-  }
-  return n;
+size_t alive_total(const board *ptr) {
+  return ptr->curr_total;
 }
 
 void board_edit(board *ptr) {
@@ -210,6 +205,11 @@ void board_dispose(board **pp) {
   }
   free(*pp);
   *pp = NULL;
+}
+
+void board_displaycheckup(const board *ptr) {
+  printf("CHECKUP: GEN = %zu; ALIVE CELLS = %zu\n", ptr->gen, ptr->curr_total);
+  return;
 }
 
 // =============================================================================

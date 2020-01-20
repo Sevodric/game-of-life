@@ -31,17 +31,19 @@ extern void board_update(board *ptr);
 extern void board_upgrade(board *ptr);
 
 //  board_draw: draw the board pointed to by ptr.
-extern void board_draw(board *ptr);
+extern void board_draw(const board *ptr);
 
 //  alive_total: returns the total amount of living cells on the board pointed
 //    to by ptr.
-extern unsigned int alive_total(board *ptr);
+extern size_t alive_total(const board *ptr);
 
 //  board_edit: enters the editing mode for the board pointed to by ptr.
 extern void board_edit(board *ptr);
 
 //  board_dispose: free the alocated memory to *pp and give *pp the NULL value.
 extern void board_dispose(board **pp);
+
+void board_displaycheckup(const board *ptr);
 
 // === SOME INITIAL CONFIGURATIONS ============================================
 
