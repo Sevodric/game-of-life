@@ -208,7 +208,7 @@ void board_dispose(board **pp) {
 }
 
 void board_displaycheckup(const board *ptr) {
-  printf("CHECKUP: GEN = %zu; ALIVE CELLS = %zu\n", ptr->gen, ptr->curr_total);
+  printf("GEN: %-4zu\tALIVE CELLS: %-4zu\n", ptr->gen, ptr->curr_total);
   return;
 }
 
@@ -218,6 +218,8 @@ void ic_blinker(board *ptr, int x, int y) {
   ptr->curr_gen[x - 1][y] = ALIVE;
   ptr->curr_gen[x][y] = ALIVE;
   ptr->curr_gen[x + 1][y] = ALIVE;
+  ptr->curr_total += 3;
+  ptr->next_total += 3;
 }
 
 void ic_toad(board *ptr, int x, int y) {
@@ -227,6 +229,8 @@ void ic_toad(board *ptr, int x, int y) {
   ptr->curr_gen[x - 1][y + 1] = ALIVE;
   ptr->curr_gen[x][y + 1] = ALIVE;
   ptr->curr_gen[x + 1][y + 1] = ALIVE;
+  ptr->curr_total += 6;
+  ptr->next_total += 6;
 }
 
 void ic_beacon(board *ptr, int x, int y) {
@@ -238,6 +242,8 @@ void ic_beacon(board *ptr, int x, int y) {
   ptr->curr_gen[x + 2][y + 1] = ALIVE;
   ptr->curr_gen[x + 2][y + 2] = ALIVE;
   ptr->curr_gen[x + 1][y + 2] = ALIVE;
+  ptr->curr_total += 8;
+  ptr->next_total += 8;
 }
 
 void ic_pulsar(board *ptr, int x, int y) {
@@ -292,6 +298,9 @@ void ic_pulsar(board *ptr, int x, int y) {
   ptr->curr_gen[x - 2][y + 6] = ALIVE;
   ptr->curr_gen[x - 3][y + 6] = ALIVE;
   ptr->curr_gen[x - 4][y + 6] = ALIVE;
+
+  ptr->curr_total += 48;
+  ptr->next_total += 48;
 }
 
 void ic_glider(board *ptr, int x, int y) {
@@ -300,6 +309,8 @@ void ic_glider(board *ptr, int x, int y) {
   ptr->curr_gen[x + 1][y + 1] = ALIVE;
   ptr->curr_gen[x][y + 1] = ALIVE;
   ptr->curr_gen[x - 1][y + 1] = ALIVE;
+  ptr->curr_total += 5;
+  ptr->next_total += 5;
 }
 
 void ic_lwss(board *ptr, int x, int y) {
@@ -312,6 +323,8 @@ void ic_lwss(board *ptr, int x, int y) {
   ptr->curr_gen[x + 2][y + 1] = ALIVE;
   ptr->curr_gen[x + 1][y + 2] = ALIVE;
   ptr->curr_gen[x - 3][y + 2] = ALIVE;
+  ptr->curr_total += 9;
+  ptr->next_total += 9;
 }
 
 void ic_mwss(board *ptr, int x, int y) {
@@ -326,6 +339,8 @@ void ic_mwss(board *ptr, int x, int y) {
   ptr->curr_gen[x + 2][y + 2] = ALIVE;
   ptr->curr_gen[x - 3][y + 2] = ALIVE;
   ptr->curr_gen[x][y + 3] = ALIVE;
+  ptr->curr_total += 11;
+  ptr->next_total += 11;
 }
 
 void ic_hwss(board *ptr, int x, int y) {
@@ -342,6 +357,8 @@ void ic_hwss(board *ptr, int x, int y) {
   ptr->curr_gen[x][y + 2] = ALIVE;
   ptr->curr_gen[x - 1][y + 2] = ALIVE;
   ptr->curr_gen[x - 3][y + 1] = ALIVE;
+  ptr->curr_total += 13;
+  ptr->next_total += 13;
 }
 
 void ic_rpentomino(board *ptr, int x, int y) {
@@ -350,6 +367,8 @@ void ic_rpentomino(board *ptr, int x, int y) {
   ptr->curr_gen[x][y - 1] = ALIVE;
   ptr->curr_gen[x][y] = ALIVE;
   ptr->curr_gen[x][y + 1] = ALIVE;
+  ptr->curr_total += 5;
+  ptr->next_total += 5;
 }
 
 void ic_diehard(board *ptr, int x, int y) {
@@ -360,6 +379,8 @@ void ic_diehard(board *ptr, int x, int y) {
   ptr->curr_gen[x + 2][y + 1] = ALIVE;
   ptr->curr_gen[x + 3][y + 1] = ALIVE;
   ptr->curr_gen[x + 4][y + 1] = ALIVE;
+  ptr->curr_total += 7;
+  ptr->next_total += 7;
 }
 
 void ic_acorn(board *ptr, int x, int y) {
@@ -370,6 +391,8 @@ void ic_acorn(board *ptr, int x, int y) {
   ptr->curr_gen[x + 2][y + 1] = ALIVE;
   ptr->curr_gen[x + 3][y + 1] = ALIVE;
   ptr->curr_gen[x + 4][y + 1] = ALIVE;
+  ptr->curr_total += 7;
+  ptr->next_total += 7;
 }
 
 void ic_rand(board *ptr) {
@@ -377,6 +400,8 @@ void ic_rand(board *ptr) {
   for (int x = 0; x < BOARD_SIZE; ++x) {
     for (int y = 0; y < BOARD_SIZE; ++y) {
       ptr->curr_gen[x][y] = rand() % 2;
+      ptr->curr_total += ptr->curr_gen[x][y];
+      ptr->next_total += ptr->curr_gen[x][y];
     }
   }
 }

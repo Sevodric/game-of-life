@@ -2,7 +2,6 @@
  *  -> Adapt the board's size to a given argument
  *  -> Create a --help command
  *  -> Revamp the history system: save each boards and symply points to them
- *  -> Print informations on the terminal
  */
 
 #include <stdlib.h>
@@ -35,7 +34,8 @@ int main(void) {
   //ic_lwss(b, 20, 25);
   //ic_mwss(b, 20, 35);
   //ic_hwss(b, 20, 45);
-  ic_diehard(b, 50, 50);
+  //ic_diehard(b, 50, 50);
+  ic_rand(b);
 
   // Initializes the pressed key to SPACE in order to execute the first loop
   int key = 0;
@@ -46,7 +46,6 @@ int main(void) {
   
   // Main loop 
   while (1) {
-    board_displaycheckup(b);
     if (key == KEY_ESC) {
       break;
     }
@@ -63,6 +62,9 @@ int main(void) {
       board_upgrade(b);
       board_draw(b);
     }
+    
+    // Displays information on the standard output
+    board_displaycheckup(b);
     
     // Updates the pressed key
     key = sg_get_key();
