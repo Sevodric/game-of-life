@@ -70,7 +70,7 @@ board *board_init(void) {
       NEXT(ptr, x, y) = DEAD;
     }
   }
-  ptr->gen = 0;
+  ptr->gen = 1;
   ptr->curr_total = 0;
   ptr->next_total = 0;
   return ptr;

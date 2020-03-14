@@ -1,11 +1,12 @@
 /* TODO: 
  *  -> Adapt the board's size to a given argument
- *  -> Create a --help command
- *  -> Revamp the history system: save each boards and symply points to them
+ *  -> Complete the --help command
+ *  -> Determine the initial configuration based on an argument
  */
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "sg.h"
 #include "gol.h"
 
@@ -20,7 +21,17 @@
 #define BGCOLOR EINGRAU
 #define FGCOLOR IVORY
 
-int main(void) {
+// usage: displays a help message and exit the program
+void usage(void);
+
+int main(int argc, char *argv[]) {
+  // Displays a help message if asked
+  for (int i = 1; i < argc; i++) {
+    if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) {
+      usage();
+    }
+  }
+
   // Initializes the board and the initial configurations
   board *b = board_init();
   if (b == NULL) {
@@ -80,4 +91,9 @@ dispose:
   board_dispose(&b);
   sg_close();
   return r;
+}
+
+void usage(void) {
+  printf("...\n");
+  exit(EXIT_SUCCESS);
 }

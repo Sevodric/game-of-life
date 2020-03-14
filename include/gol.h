@@ -66,4 +66,5 @@ extern void ic_acorn(board *ptr, int x, int y);
 
 // Random
 extern void ic_rand(board *ptr);
+
 #endif

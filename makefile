@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -std=c11 -Wall -Wconversion -Werror -Wextra -Wpedantic                \
-	 -Wwrite-strings -O2 -Iinclude/ -g
+	 -Wwrite-strings -O2 -Iinclude/
 LDFLAGS = -lX11
 objects = main.o src/gol.o src/sg.o
 executable = main
