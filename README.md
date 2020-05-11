@@ -4,7 +4,7 @@ A Conway's Game of Life, written in C using the Simple Graph library.
 
 ## Usage
 
-## Normal mode
+### Normal mode
 * SPACE: next generation.
 * E: enter editing mode.
 * ESCAPE: exit
